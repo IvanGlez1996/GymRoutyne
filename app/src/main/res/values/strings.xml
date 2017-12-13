@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GymRoutyne</string>
+    <string name="action_salir">Salir</string>
+    <string name="action_guardar">Guardar</string>
+    <string name="title_activity_vista_agregacion">Agregar receta</string>
+    <string name="nombre">Nombre:</string>
+    <string name="identificador">Identificador:</string>
+    <string name="aparato">Aparato:</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    
+</resources>
