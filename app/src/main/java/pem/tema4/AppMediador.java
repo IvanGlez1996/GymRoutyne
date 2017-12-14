@@ -26,9 +26,9 @@ public class AppMediador extends Application {
 	private IVistaAgregacion vistaAgregacion;
 
 	// constantes de comunicación, almacenamiento y petición
-	public static final String CLAVE_LISTA_RECETAS = "listaRecetas";	
+	public static final String CLAVE_LISTA_RUTINAS = "listaRutinas";
 	public static final String AVISO_DATOS_LISTOS = "pem.tema4.AVISO_DATOS_LISTOS";	
-	public static final String CLAVE_DETALLE_RECETA = "detalleReceta";	
+	public static final String CLAVE_DETALLE_RUTINAS = "detalleRutina";
 	public static final String AVISO_DETALLE_LISTO = "pem.tema4.AVISO_DETALLE_LISTO";
 	public static final String AVISO_DATOS_AGREGADOS = "pem.tema4.AVISO_DATOS_AGREGADOS";
 	public static final String AVISO_DATOS_ELIMINADOS = "pem.tema4.AVISO_DATOS_ELIMINADOS";

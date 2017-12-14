@@ -32,7 +32,7 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 	/*@Override
 	protected  void onResume(){
 		super.onResume();
-		presentadorPrincipal.obtenerDatos();
+		presentadorPrincipal.obtenerRutinas();
 	}*/
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +93,7 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 	protected void onStart() {
 		super.onStart();
 		// TODO Solicitar al presentador que recupere los datos desde el modelo.
-		presentadorPrincipal.obtenerDatos();
+		presentadorPrincipal.obtenerRutinas();
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
             getSupportFragmentManager().executePendingTransactions();
         }
         // TODO Solicitar al presentador que trate el item seleccionado.
-		presentadorPrincipal.obtenerDetalle(posicion);
+		presentadorPrincipal.obtenerEjercicios(posicion);
     }
 
 
@@ -159,7 +159,7 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 				transaccion.addToBackStack(null);
 				transaccion.commit();
 				fab.setVisibility(View.VISIBLE);
-				presentadorPrincipal.obtenerDatos();
+				presentadorPrincipal.obtenerRutinas();
 			} else{
 				//No está en la vista del detalle
 				finish();
@@ -186,7 +186,7 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 		// TODO Dentro del método actualizarMaestro(Object[] datos), si es una pantalla multi-panel, presentar 
 		// el detalle de la primera receta.
 		if (findViewById(R.id.contenedorDeFragmentos) == null){
-			presentadorPrincipal.obtenerDetalle(0);
+			presentadorPrincipal.obtenerEjercicios(0);
 		}
 	}
 
@@ -198,8 +198,7 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 	@Override
 	public void actualizarDetalle(Object[] datos) {
 		fragmentoDetalle.actualizarNombreReceta((String) datos[0]);
-		fragmentoDetalle.actualizarImagenReceta((Bitmap) datos[1]);
-		fragmentoDetalle.actualizarDescripcion((String) datos[2]);
+		fragmentoDetalle.actualizarDescripcion((String) datos[1]);
 	}
 
 	@Override
@@ -216,7 +215,7 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 		alerta.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				presentadorPrincipal.obtenerDatos();
+				presentadorPrincipal.obtenerRutinas();
 			}
 		});
 		alerta.show();

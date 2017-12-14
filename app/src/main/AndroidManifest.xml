@@ -8,11 +8,6 @@
         android:minSdkVersion="22"
         android:targetSdkVersion="22" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE">
-    </uses-permission>
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE">
-    </uses-permission>
 
     <application
         android:name="pem.tema4.AppMediador"
@@ -30,8 +25,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".VistaAgregacion" android:label="@string/title_activity_vista_agregacion">
-        </activity>
 
     </application>
 

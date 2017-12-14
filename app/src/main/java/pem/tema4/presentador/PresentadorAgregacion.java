@@ -7,7 +7,6 @@ import android.content.Intent;
 
 import pem.tema4.AppMediador;
 import pem.tema4.modelo.Modelo;
-import pem.tema4.presentador.IPresentadorAgregacion;
 import pem.tema4.vista.IVistaAgregacion;
 
 public class PresentadorAgregacion implements IPresentadorAgregacion {
@@ -39,7 +38,7 @@ public class PresentadorAgregacion implements IPresentadorAgregacion {
         datos[0] = vistaAgregacion.getNombre();
         datos[1] = vistaAgregacion.getIdentificador();
         datos[2] = vistaAgregacion.getAparato();
-        Modelo.getInstance().agregarReceta(datos);
+        Modelo.getInstance().agregarRutina(datos);
     }
 
 }

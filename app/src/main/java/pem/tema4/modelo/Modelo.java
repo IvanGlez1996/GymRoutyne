@@ -3,15 +3,21 @@ package pem.tema4.modelo;
 import android.os.Bundle;
 import android.os.Environment;
 
+import java.util.ArrayList;
+
 import pem.tema4.AppMediador;
 
 public class Modelo implements IModelo {
 
     private static Modelo singleton = null;
-    private ConjuntoDeRecetas conjuntoDeRecetas;
+    private ConjuntoDeRutinas conjuntoDeRutinas;
+    private AdaptadorBD adaptadorBD;
+
 
     private Modelo() {
-        conjuntoDeRecetas =	ConjuntoDeRecetas.getInstance();
+        conjuntoDeRutinas =	ConjuntoDeRutinas.getInstance();
+        adaptadorBD = new AdaptadorBD(AppMediador.getInstance().getApplicationContext());
+
     }
 
     public static Modelo getInstance() {
@@ -22,47 +28,47 @@ public class Modelo implements IModelo {
 
 
 
-    // TODO Implementar el método obtenerDatos() que recupera los datos de la lista de recetas del
-	// conjunto de recetas y envia una notificación del tipo AVISO_DATOS_LISTOS al presentador.
     @Override
-    public void obtenerDatos() {
-        Bundle extras = new Bundle();
-        extras.putSerializable(AppMediador.CLAVE_LISTA_RECETAS, conjuntoDeRecetas.getListaDeRecetas());
-        AppMediador.getInstance().sendBroadcast(AppMediador.AVISO_DATOS_LISTOS, extras);
+    public void obtenerRutinas() {
+        if(adaptadorBD.abrir() != null) {
+            Bundle extras = new Bundle();
+            extras.putSerializable(AppMediador.CLAVE_LISTA_RUTINAS, adaptadorBD.obtenerRutinas());
+            AppMediador.getInstance().sendBroadcast(AppMediador.AVISO_DATOS_LISTOS, extras);
+            adaptadorBD.cerrar();
+        }
     }
 
 
-    // TODO Implementar el método obtenerDetalle(int posicion) que recupera los datos del detalle de una receta del
-	// conjunto de recetas y envia una notificación del tipo AVISO_DETALLE_LISTO al presentador.
     @Override
-    public void obtenerDetalle(int posicion) {
-        Item receta = conjuntoDeRecetas.getListaDeRecetas().get(posicion);
-        String[] datos = new String[4];
-        datos[0] = receta.getNombreReceta();
-        datos[1] = receta.getAparatoReceta();
-        datos[2] = Environment.getExternalStorageDirectory().getAbsolutePath() + "/imagenes/" + receta.getIdReceta() + ".png";
-        datos[3] = AccesoArchivo.leerReceta(receta.getIdReceta() + ".txt");
-        Bundle extras = new Bundle();
-        extras.putStringArray(AppMediador.CLAVE_DETALLE_RECETA, datos);
-        AppMediador.getInstance().sendBroadcast(AppMediador.AVISO_DETALLE_LISTO, extras);
+    public void obtenerEjerciciosRutinas(int posicion) {
+        if(adaptadorBD.abrir() != null) {
+            int idRutina = adaptadorBD.obtenerRutinas().get(posicion).getId();
+            ArrayList<Ejercicio_rutina> ejercicio_rutinas = new ArrayList<>();
+            ejercicio_rutinas = adaptadorBD.obtenerEjerciciosRutina();
+            String[] datos = new String[2];
+            datos[0] = String.valueOf(ejercicio_rutinas.get(1).getReps());
+            datos[1] = String.valueOf(ejercicio_rutinas.get(0).getReps());
+            Bundle extras = new Bundle();
+            extras.putStringArray(AppMediador.CLAVE_DETALLE_RUTINAS, datos);
+            AppMediador.getInstance().sendBroadcast(AppMediador.AVISO_DETALLE_LISTO, extras);
+            adaptadorBD.cerrar();
+        }
     }
 
 
-    // TODO Añadir el método agregarReceta(Object[] datos) que almacena una nueva receta en la lista
-	// de recetas. En la posición 0 se almacena el nombre del archivo de imagen, en la posición 1 se
-	// almacena el nombre de la receta y en la posición 2 se almacena la descripción de la receta.
+
     @Override
-    public void agregarReceta(Object[] datos) {
-        conjuntoDeRecetas.agregarItem(new Item((String)datos[1], (String)datos[0], (String)datos[2]));
+    public void agregarRutina(Object[] datos) {
+        //conjuntoDeRutinas.agregarItem(new Ejercicio((String)datos[1], (String)datos[0], (String)datos[2]));
         AppMediador.getInstance().sendBroadcast(AppMediador.AVISO_DATOS_AGREGADOS, null);
     }
 
     @Override
-    public void eliminarReceta(int posicion) {
-        ConjuntoDeRecetas conjuntoDeRecetas = ConjuntoDeRecetas.getInstance();
-        conjuntoDeRecetas.getListaDeRecetas().remove(posicion);
+    public void eliminarRutina(int posicion) {
+        ConjuntoDeRutinas conjuntoDeRutinas = ConjuntoDeRutinas.getInstance();
+        conjuntoDeRutinas.getListaDeRutinas().remove(posicion);
         Bundle extras = new Bundle();
-        extras.putSerializable(AppMediador.CLAVE_LISTA_RECETAS, conjuntoDeRecetas.getListaDeRecetas());
+        extras.putSerializable(AppMediador.CLAVE_LISTA_RUTINAS, conjuntoDeRutinas.getListaDeRutinas());
         AppMediador.getInstance().sendBroadcast(AppMediador.AVISO_DATOS_ELIMINADOS, extras);
     }
 }
