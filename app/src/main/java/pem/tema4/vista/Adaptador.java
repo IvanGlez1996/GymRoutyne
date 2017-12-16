@@ -31,6 +31,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.FilaViewHolder>
     }
 
 
+
     public interface SeleccionListener {
         public void onClick(FilaViewHolder fvh, int posicion);
     }

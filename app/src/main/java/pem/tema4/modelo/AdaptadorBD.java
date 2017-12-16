@@ -87,8 +87,14 @@ public class AdaptadorBD {
             añadirRutina("Rutina 1");
             añadirRutina("Rutina 2");
             añadirEjercicio("Sentadillas", "dhjdbdhbjdjhbdjhbdd", "sghjsghdvbhdbhd");
-            añadirEjercicioRutina(1, 1, 5, 10);
+            añadirEjercicioRutina(1, 1, 5, 14);
             añadirEjercicioRutina(2, 1, 3, 8);
+            añadirEjercicioRutina(1, 1, 5, 11);
+            añadirEjercicioRutina(1, 1, 5, 12);
+            añadirEjercicioRutina(1, 1, 5, 13);
+
+
+
         }
         return this;
     }
@@ -154,20 +160,31 @@ public class AdaptadorBD {
         return lista;
     }
 
-    public ArrayList<Ejercicio_rutina> obtenerEjerciciosRutina() {
-        String sql = "SELECT * FROM "+ NOMBRE_TABLA_EJERCICIOS_RUTINAS+";";
+    public ArrayList<Ejercicio_rutina> obtenerEjerciciosRutina(int id) {
+        String sql = "SELECT * FROM "+ NOMBRE_TABLA_EJERCICIOS_RUTINAS+" WHERE "+COLUMNA_ID_RUTINA + "=" + id +";";
         Cursor cursor = db.rawQuery(sql, null);
         ArrayList<Ejercicio_rutina> lista = new ArrayList<Ejercicio_rutina>();
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            int id = cursor.getInt(0);
+            int id1 = cursor.getInt(0);
             int idRutina = cursor.getInt(1);
             int idEjercicio = cursor.getInt(2);
             int sets = cursor.getInt(3);
             int reps = cursor.getInt(4);
-            lista.add(new Ejercicio_rutina(id, idRutina, idEjercicio, sets, reps));
+            lista.add(new Ejercicio_rutina(id1, idRutina, idEjercicio, sets, reps, obtenerNombreEjercicio(idEjercicio)));
         }
         cursor.close();
         return lista;
+    }
+
+    public String obtenerNombreEjercicio(int idEjercicio){
+        String sql = "SELECT * FROM " + NOMBRE_TABLA_EJERCICIOS + " WHERE " + COLUMNA_ID + "=" + idEjercicio + ";";
+        Cursor cursor = db.rawQuery(sql, null);
+        String nombre = "";
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            nombre = cursor.getString(1);
+        }
+        cursor.close();
+        return nombre;
     }
 
 

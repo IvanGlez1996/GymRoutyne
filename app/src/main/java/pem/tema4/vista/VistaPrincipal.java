@@ -1,10 +1,10 @@
 package pem.tema4.vista;
 
 import pem.tema4.AppMediador;
+import pem.tema4.modelo.Ejercicio_rutina;
 import pem.tema4.presentador.IPresentadorPrincipal;
 
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -19,8 +19,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.ArrayList;
+
 public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal,
-		FragmentoMaestro.EscuchaFragmento, NavigationView.OnNavigationItemSelectedListener {
+		FragmentoMaestro.EscuchaFragmento, FragmentoDetalle.EscuchaFragmento, NavigationView.OnNavigationItemSelectedListener {
 	
 	private AppMediador appMediador;
 	private IPresentadorPrincipal presentadorPrincipal;
@@ -196,9 +198,8 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 	// para realizarla, en la posición 1 del vector está la imagen como un Bitmap y en en la posición 3 
 	// del vector está la descripción de la receta.
 	@Override
-	public void actualizarDetalle(Object[] datos) {
-		fragmentoDetalle.actualizarNombreReceta((String) datos[0]);
-		fragmentoDetalle.actualizarDescripcion((String) datos[1]);
+	public void actualizarDetalle(ArrayList<Ejercicio_rutina> datos) {
+		fragmentoDetalle.crearLista(datos);
 	}
 
 	@Override

@@ -44,12 +44,9 @@ public class Modelo implements IModelo {
         if(adaptadorBD.abrir() != null) {
             int idRutina = adaptadorBD.obtenerRutinas().get(posicion).getId();
             ArrayList<Ejercicio_rutina> ejercicio_rutinas = new ArrayList<>();
-            ejercicio_rutinas = adaptadorBD.obtenerEjerciciosRutina();
-            String[] datos = new String[2];
-            datos[0] = String.valueOf(ejercicio_rutinas.get(1).getReps());
-            datos[1] = String.valueOf(ejercicio_rutinas.get(0).getReps());
+            ejercicio_rutinas = adaptadorBD.obtenerEjerciciosRutina(idRutina);
             Bundle extras = new Bundle();
-            extras.putStringArray(AppMediador.CLAVE_DETALLE_RUTINAS, datos);
+            extras.putParcelableArrayList(AppMediador.CLAVE_DETALLE_RUTINAS, ejercicio_rutinas);
             AppMediador.getInstance().sendBroadcast(AppMediador.AVISO_DETALLE_LISTO, extras);
             adaptadorBD.cerrar();
         }

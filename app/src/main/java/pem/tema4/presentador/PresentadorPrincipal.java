@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import java.util.ArrayList;
 
 import pem.tema4.AppMediador;
+import pem.tema4.modelo.Ejercicio_rutina;
 import pem.tema4.modelo.IModelo;
 import pem.tema4.modelo.Ejercicio;
 import pem.tema4.modelo.Modelo;
@@ -39,10 +40,7 @@ public class PresentadorPrincipal implements IPresentadorPrincipal {
             }
 
             else if (intent.getAction().equals(AppMediador.AVISO_DETALLE_LISTO)){
-                String[] datosDetalle = intent.getStringArrayExtra(AppMediador.CLAVE_DETALLE_RUTINAS);
-                Object[] datos = new Object[2];
-                datos[0] = datosDetalle[0];
-                datos[1] = BitmapFactory.decodeFile(datosDetalle[1]);
+                ArrayList<Ejercicio_rutina> datos = intent.getParcelableArrayListExtra(AppMediador.CLAVE_DETALLE_RUTINAS);
                 AppMediador.getInstance().getVistaPrincipal().actualizarDetalle(datos);
             }
 

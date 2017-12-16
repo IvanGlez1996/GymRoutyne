@@ -1,5 +1,10 @@
 package pem.tema4.vista;
 
+import java.util.ArrayList;
+
+import pem.tema4.modelo.Ejercicio_rutina;
+import pem.tema4.modelo.Rutina;
+
 public interface IVistaPrincipal {
 	
 	// TODO Añadir el método actualizarMaestro(Object[] datos) que actualiza la lista maestro con los datos
@@ -10,7 +15,7 @@ public interface IVistaPrincipal {
 	// datos[0] = almacena el nombre de la receta y en qué se usa para realizarla (String).
 	// datos[1] = almacena una imagen de la receta (Bitmap).
 	// datos[2] = almacena la descripción de la receta (String).
-    public void actualizarDetalle(Object[] datos);
+    public void actualizarDetalle(ArrayList<Ejercicio_rutina> datos);
 
     public void presentarAlerta(int posicion);
 

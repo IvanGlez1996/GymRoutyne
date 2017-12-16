@@ -7,4 +7,6 @@ package pem.tema4.vista;
 public interface IItemTouchHelperAdapter {
 
     void onItemDismiss(int position);
+
+
 }
