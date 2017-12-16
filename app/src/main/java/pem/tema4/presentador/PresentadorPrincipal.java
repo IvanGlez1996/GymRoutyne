@@ -37,6 +37,14 @@ public class PresentadorPrincipal implements IPresentadorPrincipal {
                     datos[i] = listaRutinas.get(i).getNombre();
                 }
                 AppMediador.getInstance().getVistaPrincipal().actualizarMaestro(datos);
+            }else if(intent.getAction().equals(AppMediador.AVISO_DATOS_AGREGADOS)){
+                ArrayList<Rutina> listaRutinas = (ArrayList<Rutina>) intent.getSerializableExtra(AppMediador.CLAVE_LISTA_RUTINAS);
+                String[] datos = new String[listaRutinas.size()];
+                for(int i = 0; i<listaRutinas.size(); i++){
+                    datos[i] = listaRutinas.get(i).getNombre();
+                }
+                AppMediador.getInstance().getVistaPrincipal().actualizarMaestro(datos);
+
             }
 
             else if (intent.getAction().equals(AppMediador.AVISO_DETALLE_LISTO)){
@@ -76,15 +84,15 @@ public class PresentadorPrincipal implements IPresentadorPrincipal {
     }
 
 
-    // TODO Implementar el método tratarAgregar() que lanza la vista de agregación por medio del mediador.
+    // TODO Implementar el método agregarRutina() que lanza la vista de agregación por medio del mediador.
     @Override
-    public void tratarAgregar() {
-        AppMediador appMediador = AppMediador.getInstance();
-        appMediador.launchActivity(appMediador.getVistaParaAgregacion(), appMediador.getVistaPrincipal(), null);
+    public void agregarRutina(String nombre) {
+        AppMediador.getInstance().registerReceiver(receptorDeAvisos, AppMediador.AVISO_DATOS_AGREGADOS);
+        modelo.agregarRutina(nombre);
     }
 
     @Override
-    public void eliminarReceta(int posicion) {
+    public void eliminarRutina(int posicion) {
         AppMediador.getInstance().registerReceiver(receptorDeAvisos, AppMediador.AVISO_DATOS_ELIMINADOS);
         modelo.eliminarRutina(posicion);
     }

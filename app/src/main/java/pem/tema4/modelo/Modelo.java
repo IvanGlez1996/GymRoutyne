@@ -55,18 +55,27 @@ public class Modelo implements IModelo {
 
 
     @Override
-    public void agregarRutina(Object[] datos) {
-        //conjuntoDeRutinas.agregarItem(new Ejercicio((String)datos[1], (String)datos[0], (String)datos[2]));
-        AppMediador.getInstance().sendBroadcast(AppMediador.AVISO_DATOS_AGREGADOS, null);
+    public void agregarRutina(String nombre) {
+        if (adaptadorBD.abrir() != null) {
+            adaptadorBD.añadirRutina(nombre);
+            Bundle extras = new Bundle();
+            extras.putSerializable(AppMediador.CLAVE_LISTA_RUTINAS, adaptadorBD.obtenerRutinas());
+            AppMediador.getInstance().sendBroadcast(AppMediador.AVISO_DATOS_AGREGADOS, extras);
+            adaptadorBD.cerrar();
+        }
     }
 
     @Override
     public void eliminarRutina(int posicion) {
-        ConjuntoDeRutinas conjuntoDeRutinas = ConjuntoDeRutinas.getInstance();
-        conjuntoDeRutinas.getListaDeRutinas().remove(posicion);
-        Bundle extras = new Bundle();
-        extras.putSerializable(AppMediador.CLAVE_LISTA_RUTINAS, conjuntoDeRutinas.getListaDeRutinas());
-        AppMediador.getInstance().sendBroadcast(AppMediador.AVISO_DATOS_ELIMINADOS, extras);
+        if(adaptadorBD.abrir() != null) {
+            ArrayList<Rutina> rutinas = adaptadorBD.obtenerRutinas();
+            int id = rutinas.get(posicion).getId();
+            adaptadorBD.eliminarRutina(id);
+            Bundle extras = new Bundle();
+            extras.putSerializable(AppMediador.CLAVE_LISTA_RUTINAS, adaptadorBD.obtenerRutinas());
+            AppMediador.getInstance().sendBroadcast(AppMediador.AVISO_DATOS_ELIMINADOS, extras);
+            adaptadorBD.cerrar();
+        }
     }
 }
 

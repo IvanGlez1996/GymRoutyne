@@ -11,7 +11,7 @@ public interface IModelo {
 
 	// TODO Añadir el método agregarRutina(Object[] datos) que almacena una nueva receta en la lista
 	// de recetas.
-    public void agregarRutina(Object[] datos);
+    public void agregarRutina(String nombre);
 
     public void eliminarRutina(int posicion);
 }

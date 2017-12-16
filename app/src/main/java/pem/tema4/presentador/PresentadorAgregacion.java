@@ -32,13 +32,13 @@ public class PresentadorAgregacion implements IPresentadorAgregacion {
 	// solicita al modelo que almacene los datos que recupera de la vista. 
     @Override
     public void tratarGuardar() {
-        IVistaAgregacion vistaAgregacion = appMediador.getVistaAgregacion();
+        /*IVistaAgregacion vistaAgregacion = appMediador.getVistaAgregacion();
         appMediador.registerReceiver(receptorDeAvisos, AppMediador.AVISO_DATOS_AGREGADOS);
         String[] datos = new String[3];
         datos[0] = vistaAgregacion.getNombre();
         datos[1] = vistaAgregacion.getIdentificador();
         datos[2] = vistaAgregacion.getAparato();
-        Modelo.getInstance().agregarRutina(datos);
+        Modelo.getInstance().agregarRutina(datos);*/
     }
 
 }

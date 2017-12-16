@@ -15,9 +15,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -75,7 +77,7 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 			@Override
 			public void onClick(View view){
 				//TODO Solicitar al presentador para que agregue una nueva receta
-				presentadorPrincipal.tratarAgregar();
+				presentarAlertaAgregar();
 			}
 		});
 
@@ -206,11 +208,33 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 	public void presentarAlerta(final int posicion) {
 		AlertDialog.Builder alerta = new AlertDialog.Builder(this);
 		alerta.setTitle("Aviso");
-		alerta.setMessage("¿De verdad quiere eliminar esta receta?");
+		alerta.setMessage("¿Seguro que desea eliminar esta rutina de forma permanente?");
 		alerta.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				presentadorPrincipal.eliminarReceta(posicion);
+				presentadorPrincipal.eliminarRutina(posicion);
+			}
+		});
+		alerta.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				presentadorPrincipal.obtenerRutinas();
+			}
+		});
+		alerta.show();
+	}
+
+	public void presentarAlertaAgregar() {
+		AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+		alerta.setMessage("Añada una nueva rutina:");
+		final EditText input = new EditText(this);
+		input.setInputType(InputType.TYPE_CLASS_TEXT);
+		alerta.setView(input);
+		alerta.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				String inputText = input.getText().toString();
+				presentadorPrincipal.agregarRutina(inputText);
 			}
 		});
 		alerta.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

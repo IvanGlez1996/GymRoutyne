@@ -33,6 +33,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         //TODO presentar alerta de la vista principal
        mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
-       AppMediador.getInstance().getVistaPrincipal().presentarAlerta(viewHolder.getAdapterPosition());
+       int posicion = viewHolder.getLayoutPosition();
+       AppMediador.getInstance().getVistaPrincipal().presentarAlerta(posicion);
     }
 }

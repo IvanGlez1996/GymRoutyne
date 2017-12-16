@@ -7,8 +7,8 @@ public interface IPresentadorPrincipal {
 	// TODO Añadir el método obtenerDetalles(int posicion) que recupera los datos de una receta dada su posición
 	// en la lista maestro.
     public void obtenerEjercicios(int posicion);
-	// TODO Añadir el método tratarAgregar() que lanza la vista de agregación por medio del mediador.
-    public void tratarAgregar();
+	// TODO Añadir el método agregarRutina() que lanza la vista de agregación por medio del mediador.
+    public void agregarRutina(String nombre);
 
-    public void eliminarReceta(int posicion);
+    public void eliminarRutina(int posicion);
 }

@@ -187,6 +187,11 @@ public class AdaptadorBD {
         return nombre;
     }
 
+    public void eliminarRutina(int id){
+        String sql = "DELETE FROM " + NOMBRE_TABLA_RUTINAS + " WHERE " + COLUMNA_ID + "=" + id + ";";
+        db.execSQL(sql);
+    }
+
 
 
 }
