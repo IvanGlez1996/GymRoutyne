@@ -96,8 +96,6 @@ public class AdaptadorBD {
             añadirEjercicioRutina(2, 1, 5, 12);
             añadirEjercicioRutina(2, 1, 5, 13);
 
-
-
         }
         return this;
     }
@@ -163,6 +161,22 @@ public class AdaptadorBD {
         return lista;
     }
 
+    public String[] obtenerDetallesEjercicio(int id) {
+        String sql = "SELECT * FROM "+ NOMBRE_TABLA_EJERCICIOS+" WHERE "+COLUMNA_ID + "=" + id +";";
+        Cursor cursor = db.rawQuery(sql, null);
+        String[] detalles = new String[3];
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            String nombre = cursor.getString(1);
+            String descipcion = cursor.getString(2);
+            String videoURL = cursor.getString(3);
+            detalles[0] = nombre;
+            detalles[1] = descipcion;
+            detalles[2] = videoURL;
+        }
+        cursor.close();
+        return detalles;
+    }
+
     public ArrayList<Ejercicio_rutina> obtenerEjerciciosRutina(int id) {
         String sql = "SELECT * FROM "+ NOMBRE_TABLA_EJERCICIOS_RUTINAS+" WHERE "+COLUMNA_ID_RUTINA + "=" + id +";";
         Cursor cursor = db.rawQuery(sql, null);
@@ -188,6 +202,17 @@ public class AdaptadorBD {
         }
         cursor.close();
         return nombre;
+    }
+
+    public Integer obtenerIdEjercicioEjercicioRutina(int id){
+        String sql = "SELECT * FROM " + NOMBRE_TABLA_EJERCICIOS_RUTINAS + " WHERE " + COLUMNA_ID + "=" + id + ";";
+        Cursor cursor = db.rawQuery(sql, null);
+        int idEjercicio = 0;
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            idEjercicio = cursor.getInt(2);
+        }
+        cursor.close();
+        return idEjercicio;
     }
 
     public void eliminarRutina(int id){

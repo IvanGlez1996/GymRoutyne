@@ -183,19 +183,22 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 			transaccion.replace(R.id.contenedorDeFragmentos, fragmentoDetalleEjercicio);
 			transaccion.addToBackStack(null);
 			transaccion.commit();
-			// TODO Quitar la visibilidad al botón flotante (para que no aparezca en el detalle)
 
 		}else{
 			FragmentTransaction transaccion = getSupportFragmentManager().beginTransaction();
 			transaccion.replace(R.id.contenedor_detalle, fragmentoDetalleEjercicio);
 			transaccion.addToBackStack(null);
 			transaccion.commit();
-			//presentadorPrincipal.obtenerDetallesEjercicio(posicion);
-			// TODO Quitar la visibilidad al botón flotante (para que no aparezca en el detalle)
+
 		}
 		fab_detalle.setVisibility(View.GONE);
 		// realiza la transacción
 		getSupportFragmentManager().executePendingTransactions();
+		String[] detalles = presentadorPrincipal.obtenerDetallesEjercicio(ejercicios_rutina.get(posicion).getId());
+
+		fragmentoDetalleEjercicio.actualizarNombreEjercicio(detalles[0]);
+		fragmentoDetalleEjercicio.actualizarDescripcionEjercicio(detalles[1]);
+		fragmentoDetalleEjercicio.actualizarImagenEjercicio(detalles[2]);
 	}
 
 

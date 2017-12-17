@@ -22,4 +22,6 @@ public interface IPresentadorPrincipal {
     int getIdRutina(int posicion);
 
     void eliminarEjercicioRutina(int id);
+
+    String[] obtenerDetallesEjercicio(int id);
 }

@@ -26,7 +26,7 @@ public class FragmentoDetalleEjercicio extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		nombreEjercicio = (TextView) getView().findViewById(R.id.nombre_ejercicio);
+		nombreEjercicio = (TextView) getView().findViewById(R.id.nombre_ejercicio_detalle);
 		imagenEjercicio = (ImageView) getView().findViewById(R.id.imagen_ejercicio);
 		descripcionEjercicio = (TextView) getView().findViewById(R.id.descripcion_ejercicio);
 	}

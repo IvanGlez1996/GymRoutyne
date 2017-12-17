@@ -116,5 +116,15 @@ public class Modelo implements IModelo {
             adaptadorBD.cerrar();
         }
     }
+
+    @Override
+    public String[] obtenerDetallesEjercicio(int id) {
+        String[] detalles = new String[3];
+        if(adaptadorBD.abrir() != null){
+            int idEjercicio = adaptadorBD.obtenerIdEjercicioEjercicioRutina(id);
+            detalles = adaptadorBD.obtenerDetallesEjercicio(idEjercicio);
+        }
+        return detalles;
+    }
 }
 

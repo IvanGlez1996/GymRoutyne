@@ -25,6 +25,8 @@ public interface IModelo {
 
     void eliminarEjercicioRutina(int id);
 
+    String[] obtenerDetallesEjercicio(int id);
+
 }
 
 
