@@ -5,6 +5,7 @@ import pem.tema4.modelo.Ejercicio_rutina;
 import pem.tema4.presentador.IPresentadorPrincipal;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -20,8 +21,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal,
 		FragmentoMaestro.EscuchaFragmento, FragmentoDetalle.EscuchaFragmento, NavigationView.OnNavigationItemSelectedListener {
@@ -32,6 +36,9 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 	private FragmentoDetalle fragmentoDetalle;
     // TODO Declarar un objeto llamado fab, que corresponda con un botón flotante
 	private FloatingActionButton fab;
+	private FloatingActionButton fab_detalle;
+	private int posicion;
+
 
 	/*@Override
 	protected  void onResume(){
@@ -81,6 +88,17 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 			}
 		});
 
+		fab_detalle = (FloatingActionButton) findViewById(R.id.fab_detalle);
+		fab_detalle.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View view){
+				//TODO Solicitar al presentador para que agregue una nueva receta
+				presentarAlertaDetalle();
+			}
+		});
+
+		fab_detalle.setVisibility(View.GONE);
+
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
 				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -125,6 +143,7 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 
     @Override
     public void alSeleccionarItem(int posicion) {
+		this.posicion = posicion;
         // Si no hay fragmento detalle, se crea la vista detalle (esto ocurre si es panel único)
         if (fragmentoDetalle == null)
             fragmentoDetalle = new FragmentoDetalle();
@@ -142,6 +161,7 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
             getSupportFragmentManager().executePendingTransactions();
         }
         // TODO Solicitar al presentador que trate el item seleccionado.
+		fab_detalle.setVisibility(View.VISIBLE);
 		presentadorPrincipal.obtenerEjercicios(posicion);
     }
 
@@ -163,6 +183,7 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 				transaccion.addToBackStack(null);
 				transaccion.commit();
 				fab.setVisibility(View.VISIBLE);
+				fab_detalle.setVisibility(View.GONE);
 				presentadorPrincipal.obtenerRutinas();
 			} else{
 				//No está en la vista del detalle
@@ -191,6 +212,7 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 		// el detalle de la primera receta.
 		if (findViewById(R.id.contenedorDeFragmentos) == null){
 			presentadorPrincipal.obtenerEjercicios(0);
+			fab_detalle.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -226,11 +248,12 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 
 	public void presentarAlertaAgregar() {
 		AlertDialog.Builder alerta = new AlertDialog.Builder(this);
-		alerta.setMessage("Añada una nueva rutina:");
+		alerta.setTitle("Añade una nueva rutina");
 		final EditText input = new EditText(this);
 		input.setInputType(InputType.TYPE_CLASS_TEXT);
+		input.setHint("Nombre");
 		alerta.setView(input);
-		alerta.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+		alerta.setPositiveButton("Añadir", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				String inputText = input.getText().toString();
@@ -241,9 +264,114 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				presentadorPrincipal.obtenerRutinas();
+				presentadorPrincipal.obtenerEjercicios(posicion);
 			}
 		});
 		alerta.show();
+	}
+
+	public void presentarAlertaDetalle(){
+		final Integer[] idSelected = new Integer[1];
+		final ArrayList<Object[]> ejercicios = presentadorPrincipal.getEjercicios();
+		CharSequence[] items = new CharSequence[ejercicios.size()];
+		for (int i = 0; i<ejercicios.size(); i++){
+			items[i] = (String)ejercicios.get(i)[1];
+		}
+		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Elige un ejercicio")
+				.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						idSelected[0] = which;
+					}
+				})
+				.setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						// User clicked OK, so save the mSelectedItems results somewhere
+						// or return them to the component that opened the dialog
+						int idEjercicio = (Integer)ejercicios.get(idSelected[0])[0];
+						presentarAlertaDetalle2(idEjercicio);
+
+					}
+				})
+				.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+
+					}
+				});
+		AlertDialog alerta = builder.create();
+		alerta.show();
+
+		/*AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+		CharSequence[] items={"Item 1","Item 2","Item 3"};
+		alerta.setTitle("Aviso");
+		alerta.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+
+			}
+		});
+		final EditText inputSets = new EditText(this);
+		inputSets.setInputType(InputType.TYPE_CLASS_NUMBER);
+		final EditText inputReps = new EditText(this);
+		inputReps.setInputType(InputType.TYPE_CLASS_NUMBER);
+		alerta.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				String inputSetsText = inputSets.getText().toString();
+				String inputRepsText = inputReps.getText().toString();
+				//presentadorPrincipal.agregarEjercicioRutina(idEjercicio, Integer.parseInt(inputSetsText), Integer.parseInt(inputRepsText));
+			}
+		});
+		alerta.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+
+			}
+		});
+		AlertDialog dialog = alerta.create();
+		dialog.show();*/
+	}
+
+	public void presentarAlertaDetalle2(final int idEjercicio){
+		AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
+		dialogo.setTitle("Añade las series y repeticiones");
+		LinearLayout layout = new LinearLayout(this);
+		layout.setOrientation(LinearLayout.VERTICAL);
+
+		final EditText setsInput = new EditText(this);
+		setsInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+		setsInput.setHint("Series");
+		layout.addView(setsInput);
+
+		final EditText repsInput = new EditText(this);
+		repsInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+		repsInput.setHint("Repeticiones");
+		layout.addView(repsInput);
+
+		dialogo.setView(layout);
+		dialogo.setPositiveButton("Añadir", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				// User clicked OK, so save the mSelectedItems results somewhere
+				// or return them to the component that opened the dialog
+				String inputSetsText = setsInput.getText().toString();
+				String inputRepsText = repsInput.getText().toString();
+				int idRutina = presentadorPrincipal.getIdRutina(posicion);
+				presentadorPrincipal.agregarEjercicioRutina(idRutina,idEjercicio, Integer.parseInt(inputSetsText), Integer.parseInt(inputRepsText));
+				presentadorPrincipal.obtenerEjercicios(posicion);
+			}
+		})
+				.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+
+					}
+				});
+		AlertDialog alerta2 = dialogo.create();
+		alerta2.show();
 	}
 
 	@SuppressWarnings("StatementWithEmptyBody")

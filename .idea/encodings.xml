@@ -19,12 +19,10 @@
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_menu_share.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_menu_slideshow.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/side_nav_bar.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout-sw600dp-land/spinner_item.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_routines.xml" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_routines.xml" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/content_routines.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/nav_header_routines.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/menu/activity_routines_drawer.xml" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher_round.xml" charset="UTF-8" />
     <file url="PROJECT" charset="ISO-8859-1" />
   </component>

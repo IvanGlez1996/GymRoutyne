@@ -1,5 +1,8 @@
 package pem.tema4.presentador;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public interface IPresentadorPrincipal {
 	
 	// TODO Añadir el método obtenerRutinas() de tipo void que solicita los datos de la lista maestro al modelo.
@@ -11,4 +14,10 @@ public interface IPresentadorPrincipal {
     public void agregarRutina(String nombre);
 
     public void eliminarRutina(int posicion);
+
+    ArrayList<Object[]> getEjercicios();
+
+    void agregarEjercicioRutina(int idRutina, int idEjercicio, int sets, int reps);
+
+    int getIdRutina(int posicion);
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import pem.tema4.AppMediador;
 import pem.tema4.modelo.Ejercicio_rutina;
@@ -95,5 +96,20 @@ public class PresentadorPrincipal implements IPresentadorPrincipal {
     public void eliminarRutina(int posicion) {
         AppMediador.getInstance().registerReceiver(receptorDeAvisos, AppMediador.AVISO_DATOS_ELIMINADOS);
         modelo.eliminarRutina(posicion);
+    }
+
+    @Override
+    public ArrayList<Object[]> getEjercicios(){
+        return modelo.getEjercicios();
+    }
+
+    @Override
+    public void agregarEjercicioRutina(int idRutina, int idEjercicio, int sets, int reps) {
+        modelo.agregarEjercicioRutina(idRutina, idEjercicio, sets, reps);
+    }
+
+    @Override
+    public int getIdRutina(int posicion) {
+        return modelo.getIdRutina(posicion);
     }
 }

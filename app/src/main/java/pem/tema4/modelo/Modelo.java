@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Environment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import pem.tema4.AppMediador;
 
@@ -43,6 +44,8 @@ public class Modelo implements IModelo {
     public void obtenerEjerciciosRutinas(int posicion) {
         if(adaptadorBD.abrir() != null) {
             int idRutina = adaptadorBD.obtenerRutinas().get(posicion).getId();
+            Bundle bundle = new Bundle();
+            bundle.putInt("idRutina", idRutina);
             ArrayList<Ejercicio_rutina> ejercicio_rutinas = new ArrayList<>();
             ejercicio_rutinas = adaptadorBD.obtenerEjerciciosRutina(idRutina);
             Bundle extras = new Bundle();
@@ -76,6 +79,34 @@ public class Modelo implements IModelo {
             AppMediador.getInstance().sendBroadcast(AppMediador.AVISO_DATOS_ELIMINADOS, extras);
             adaptadorBD.cerrar();
         }
+    }
+
+    @Override
+    public ArrayList<Object[]> getEjercicios(){
+        ArrayList<Object[]> ejercicios = new ArrayList<>();
+        if (adaptadorBD.abrir() != null){
+            ejercicios = adaptadorBD.getEjercicios();
+        }
+        return ejercicios;
+    }
+
+    @Override
+    public void agregarEjercicioRutina(int idRutina, int idEjercicio, int sets, int reps) {
+        if (adaptadorBD.abrir() != null){
+            adaptadorBD.añadirEjercicioRutina(idRutina, idEjercicio, sets, reps);
+            adaptadorBD.cerrar();
+        }
+    }
+
+    @Override
+    public int getIdRutina(int posicion) {
+        int resultado = 0;
+        if(adaptadorBD.abrir() != null) {
+            ArrayList<Rutina> rutinas = adaptadorBD.obtenerRutinas();
+            resultado = rutinas.get(posicion).getId();
+            adaptadorBD.cerrar();
+        }
+        return resultado;
     }
 }
 

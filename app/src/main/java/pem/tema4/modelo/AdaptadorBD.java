@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by IvanGlez on 13/12/2017.
@@ -87,11 +88,13 @@ public class AdaptadorBD {
             añadirRutina("Rutina 1");
             añadirRutina("Rutina 2");
             añadirEjercicio("Sentadillas", "dhjdbdhbjdjhbdjhbdd", "sghjsghdvbhdbhd");
-            añadirEjercicioRutina(1, 1, 5, 14);
+            añadirEjercicio("Press de banca", "dhjdbdhbjdjhbdjhbdd", "sghjsghdvbhdbhd");
+            añadirEjercicio("Dominadas", "dhjdbdhbjdjhbdjhbdd", "sghjsghdvbhdbhd");
+            añadirEjercicioRutina(2, 1, 5, 14);
             añadirEjercicioRutina(2, 1, 3, 8);
-            añadirEjercicioRutina(1, 1, 5, 11);
-            añadirEjercicioRutina(1, 1, 5, 12);
-            añadirEjercicioRutina(1, 1, 5, 13);
+            añadirEjercicioRutina(2, 1, 5, 11);
+            añadirEjercicioRutina(2, 1, 5, 12);
+            añadirEjercicioRutina(2, 1, 5, 13);
 
 
 
@@ -127,7 +130,7 @@ public class AdaptadorBD {
         return db.insert(NOMBRE_TABLA_EJERCICIOS, null, valores);
     }
 
-    private long añadirEjercicioRutina(int idRutina, int idEjercicio, int sets, int reps) {
+    public long añadirEjercicioRutina(int idRutina, int idEjercicio, int sets, int reps) {
         ContentValues valores = new ContentValues();
         valores.put(COLUMNA_ID_RUTINA, idRutina);
         valores.put(COLUMNA_ID_EJERCICIO, idEjercicio);
@@ -190,6 +193,20 @@ public class AdaptadorBD {
     public void eliminarRutina(int id){
         String sql = "DELETE FROM " + NOMBRE_TABLA_RUTINAS + " WHERE " + COLUMNA_ID + "=" + id + ";";
         db.execSQL(sql);
+    }
+
+    public ArrayList<Object[]> getEjercicios(){
+            String sql = "SELECT * FROM "+ NOMBRE_TABLA_EJERCICIOS+";";
+            Cursor cursor = db.rawQuery(sql, null);
+            ArrayList<Object[]> ejercicios = new ArrayList<>();
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                Object[] elementos = new Object[2];
+                elementos[0] = cursor.getInt(0);
+                elementos[1] = cursor.getString(1);
+                ejercicios.add(elementos);
+            }
+            cursor.close();
+            return ejercicios;
     }
 
 
