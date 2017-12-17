@@ -87,14 +87,19 @@ public class AdaptadorBD {
         if (!hayRutinas()) {
             añadirRutina("Rutina 1");
             añadirRutina("Rutina 2");
-            añadirEjercicio("Sentadillas", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", "@drawable/pw_sentadillas");
-            añadirEjercicio("Press de banca", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", "@drawable/pw_press_banca");
-            añadirEjercicio("Press militar", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "@drawable/pw_press_militar");
-            añadirEjercicioRutina(2, 1, 5, 14);
-            añadirEjercicioRutina(2, 1, 3, 8);
-            añadirEjercicioRutina(2, 1, 5, 11);
-            añadirEjercicioRutina(2, 1, 5, 12);
-            añadirEjercicioRutina(2, 1, 5, 13);
+            añadirEjercicio("Sentadillas", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", "android.resource://pem.tema4.vista.recetas/drawable/pw_sentadillas");
+            añadirEjercicio("Press de banca", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", "android.resource://pem.tema4.vista.recetas/drawable/drawable/pw_press_banca");
+            añadirEjercicio("Press militar", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "android.resource://pem.tema4.vista.recetas/drawable/drawable/pw_press_militar");
+
+
+            añadirEjercicioRutina(1, 1, 5, 14);
+            añadirEjercicioRutina(1, 2, 3, 8);
+            añadirEjercicioRutina(1, 3, 5, 11);
+
+
+            añadirEjercicioRutina(2, 1, 2, 10);
+            añadirEjercicioRutina(2, 2, 3, 8);
+            añadirEjercicioRutina(2, 3, 5, 11);
 
         }
         return this;

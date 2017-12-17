@@ -14,8 +14,8 @@
 		android:text="Nombre del ejercicio"/>
     <ImageView
         android:id="@+id/imagen_ejercicio"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
         android:layout_gravity="center_horizontal" 
         android:contentDescription="@string/app_name"/>
 
