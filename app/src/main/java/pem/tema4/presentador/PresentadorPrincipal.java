@@ -112,4 +112,9 @@ public class PresentadorPrincipal implements IPresentadorPrincipal {
     public int getIdRutina(int posicion) {
         return modelo.getIdRutina(posicion);
     }
+
+    @Override
+    public void eliminarEjercicioRutina(int id) {
+        modelo.eliminarEjercicioRutina(id);
+    }
 }

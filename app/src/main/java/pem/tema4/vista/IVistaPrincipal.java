@@ -19,4 +19,6 @@ public interface IVistaPrincipal {
 
     public void presentarAlerta(int posicion);
 
+    public void presentarAlertaDetalle(int posicion);
+
 }

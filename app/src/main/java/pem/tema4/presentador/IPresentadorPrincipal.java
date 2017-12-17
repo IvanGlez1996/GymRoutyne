@@ -20,4 +20,6 @@ public interface IPresentadorPrincipal {
     void agregarEjercicioRutina(int idRutina, int idEjercicio, int sets, int reps);
 
     int getIdRutina(int posicion);
+
+    void eliminarEjercicioRutina(int id);
 }

@@ -23,6 +23,8 @@ public interface IModelo {
 
     int getIdRutina(int posicion);
 
+    void eliminarEjercicioRutina(int id);
+
 }
 
 

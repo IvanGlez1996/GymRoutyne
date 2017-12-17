@@ -9,11 +9,11 @@ import pem.tema4.AppMediador;
  * Created by emartel on 09/11/2017.
  */
 
-public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
+public class SimpleItemTouchHelperCallbackDetalle extends ItemTouchHelper.Callback {
 
     private final IItemTouchHelperAdapter mAdapter;
 
-    public SimpleItemTouchHelperCallback(IItemTouchHelperAdapter mAdapter) {
+    public SimpleItemTouchHelperCallbackDetalle(IItemTouchHelperAdapter mAdapter) {
         this.mAdapter = mAdapter;
     }
 
@@ -34,6 +34,6 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
         //TODO presentar alerta de la vista principal
        mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
        int posicion = viewHolder.getLayoutPosition();
-       AppMediador.getInstance().getVistaPrincipal().presentarAlerta(posicion);
+       AppMediador.getInstance().getVistaPrincipal().presentarAlertaDetalle(posicion);
     }
 }

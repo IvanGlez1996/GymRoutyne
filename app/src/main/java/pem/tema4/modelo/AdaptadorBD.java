@@ -195,6 +195,11 @@ public class AdaptadorBD {
         db.execSQL(sql);
     }
 
+    public void eliminarEjercicioRutina(int id){
+        String sql = "DELETE FROM " + NOMBRE_TABLA_EJERCICIOS_RUTINAS + " WHERE " + COLUMNA_ID + "=" + id + ";";
+        db.execSQL(sql);
+    }
+
     public ArrayList<Object[]> getEjercicios(){
             String sql = "SELECT * FROM "+ NOMBRE_TABLA_EJERCICIOS+";";
             Cursor cursor = db.rawQuery(sql, null);

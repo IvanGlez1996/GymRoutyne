@@ -5,7 +5,6 @@ import pem.tema4.modelo.Ejercicio_rutina;
 import pem.tema4.presentador.IPresentadorPrincipal;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -24,8 +23,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 
 public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal,
 		FragmentoMaestro.EscuchaFragmento, FragmentoDetalle.EscuchaFragmento, NavigationView.OnNavigationItemSelectedListener {
@@ -37,7 +34,8 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
     // TODO Declarar un objeto llamado fab, que corresponda con un botón flotante
 	private FloatingActionButton fab;
 	private FloatingActionButton fab_detalle;
-	private int posicion;
+	private int posicionRutina;
+	private ArrayList<Ejercicio_rutina> ejercicios_rutina = new ArrayList<>();
 
 
 	/*@Override
@@ -143,7 +141,7 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 
     @Override
     public void alSeleccionarItem(int posicion) {
-		this.posicion = posicion;
+		this.posicionRutina = posicion;
         // Si no hay fragmento detalle, se crea la vista detalle (esto ocurre si es panel único)
         if (fragmentoDetalle == null)
             fragmentoDetalle = new FragmentoDetalle();
@@ -164,6 +162,15 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 		fab_detalle.setVisibility(View.VISIBLE);
 		presentadorPrincipal.obtenerEjercicios(posicion);
     }
+
+	@Override
+	public void alSeleccionarItemDetalle(int posicion) {
+		// Si no hay fragmento detalle, se crea la vista detalle (esto ocurre si es panel único)
+		if (fragmentoDetalle == null)
+			fragmentoDetalle = new FragmentoDetalle();
+		// TODO Solicitar al presentador que trate el item seleccionado.
+		//presentadorPrincipal.obtenerDetallesEjercicio(posicionRutina);
+	}
 
 
 
@@ -223,6 +230,7 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 	// del vector está la descripción de la receta.
 	@Override
 	public void actualizarDetalle(ArrayList<Ejercicio_rutina> datos) {
+		ejercicios_rutina = datos;
 		fragmentoDetalle.crearLista(datos);
 	}
 
@@ -246,6 +254,26 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 		alerta.show();
 	}
 
+	@Override
+	public void presentarAlertaDetalle(final int posicion) {
+		AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+		alerta.setTitle("Aviso");
+		alerta.setMessage("¿Seguro que desea eliminar este ejercicio de la rutina de forma permanente?");
+		alerta.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				presentadorPrincipal.eliminarEjercicioRutina(ejercicios_rutina.get(posicion).getId());
+				presentadorPrincipal.obtenerEjercicios(posicionRutina);
+			}
+		});
+		alerta.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		alerta.show();
+	}
+
 	public void presentarAlertaAgregar() {
 		AlertDialog.Builder alerta = new AlertDialog.Builder(this);
 		alerta.setTitle("Añade una nueva rutina");
@@ -264,7 +292,7 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				presentadorPrincipal.obtenerRutinas();
-				presentadorPrincipal.obtenerEjercicios(posicion);
+				presentadorPrincipal.obtenerEjercicios(posicionRutina);
 			}
 		});
 		alerta.show();
@@ -359,9 +387,9 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 				// or return them to the component that opened the dialog
 				String inputSetsText = setsInput.getText().toString();
 				String inputRepsText = repsInput.getText().toString();
-				int idRutina = presentadorPrincipal.getIdRutina(posicion);
+				int idRutina = presentadorPrincipal.getIdRutina(posicionRutina);
 				presentadorPrincipal.agregarEjercicioRutina(idRutina,idEjercicio, Integer.parseInt(inputSetsText), Integer.parseInt(inputRepsText));
-				presentadorPrincipal.obtenerEjercicios(posicion);
+				presentadorPrincipal.obtenerEjercicios(posicionRutina);
 			}
 		})
 				.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

@@ -108,5 +108,13 @@ public class Modelo implements IModelo {
         }
         return resultado;
     }
+
+    @Override
+    public void eliminarEjercicioRutina(int id) {
+        if (adaptadorBD.abrir() != null){
+            adaptadorBD.eliminarEjercicioRutina(id);
+            adaptadorBD.cerrar();
+        }
+    }
 }
 
