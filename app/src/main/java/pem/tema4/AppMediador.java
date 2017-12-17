@@ -1,12 +1,8 @@
 package pem.tema4;
 
-import pem.tema4.presentador.IPresentadorAgregacion;
 import pem.tema4.presentador.IPresentadorPrincipal;
-import pem.tema4.presentador.PresentadorAgregacion;
 import pem.tema4.presentador.PresentadorPrincipal;
-import pem.tema4.vista.IVistaAgregacion;
 import pem.tema4.vista.IVistaPrincipal;
-import pem.tema4.vista.VistaAgregacion;
 
 import android.app.Activity;
 import android.app.Application;
@@ -22,8 +18,6 @@ public class AppMediador extends Application {
 	// variables correspondientes a los presentadores, vistas y modelo
 	private IPresentadorPrincipal presentadorPrincipal;
 	private IVistaPrincipal vistaPrincipal;
-	private IPresentadorAgregacion presentadorAgregacion;
-	private IVistaAgregacion vistaAgregacion;
 
 	// constantes de comunicación, almacenamiento y petición
 	public static final String CLAVE_LISTA_RUTINAS = "listaRutinas";
@@ -57,29 +51,6 @@ public class AppMediador extends Application {
 		this.vistaPrincipal = vistaPrincipal;
 	}
 
-	public IPresentadorAgregacion getPresentadorAgregacion() {
-		if (presentadorAgregacion == null)
-			presentadorAgregacion = new PresentadorAgregacion();
-		return presentadorAgregacion;
-	}
-
-	public void removePresentadorAgregacion() {
-		presentadorAgregacion = null;
-	}
-
-	public IVistaAgregacion getVistaAgregacion() {
-		return vistaAgregacion;
-	}
-
-	public void setVistaAgregacion(IVistaAgregacion vistaAgregacion) {
-		this.vistaAgregacion = vistaAgregacion;
-	}
-
-	// Métodos destinados a la navegación en la aplicación y a la definición de servicios
-
-		public Class getVistaParaAgregacion(){
-			return VistaAgregacion.class;
-		}
 
 	// Métodos de manejo de los componentes de Android
 	public void launchActivity(Class actividadInvocada, Object invocador, Bundle extras) {
@@ -131,7 +102,6 @@ public class AppMediador extends Application {
 	public void onCreate() {
 		super.onCreate();
 		presentadorPrincipal = null;
-		presentadorAgregacion = null;
 		singleton = this;
 	}
 }

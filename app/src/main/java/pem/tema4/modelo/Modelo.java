@@ -11,12 +11,10 @@ import pem.tema4.AppMediador;
 public class Modelo implements IModelo {
 
     private static Modelo singleton = null;
-    private ConjuntoDeRutinas conjuntoDeRutinas;
     private AdaptadorBD adaptadorBD;
 
 
     private Modelo() {
-        conjuntoDeRutinas =	ConjuntoDeRutinas.getInstance();
         adaptadorBD = new AdaptadorBD(AppMediador.getInstance().getApplicationContext());
 
     }
