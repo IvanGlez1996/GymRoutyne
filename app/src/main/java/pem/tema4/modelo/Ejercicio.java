@@ -9,14 +9,14 @@ public class Ejercicio implements Serializable {
 	private static final long serialVersionUID = -344029098860190065L;
 	private int id;
 	private String nombre;
-	private String videoURL;
+	private String imagenURL;
 	private String descripcion;
 	
-	public Ejercicio(int id, String nombre, String descripcion, String videoURL) {
+	public Ejercicio(int id, String nombre, String descripcion, String imagenURL) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
-		this.videoURL = videoURL;
+		this.imagenURL = imagenURL;
 		this.descripcion = descripcion;
 	}
 
@@ -36,8 +36,8 @@ public class Ejercicio implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public String getVideoURL(){
-		return this.videoURL;
+	public String getImagenURL(){
+		return this.imagenURL;
 	}
 
 	public String getDescripcion(){

@@ -31,6 +31,7 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 	private IPresentadorPrincipal presentadorPrincipal;
 	private FragmentoMaestro fragmentoMaestro;
 	private FragmentoDetalle fragmentoDetalle;
+	private FragmentoDetalleEjercicio fragmentoDetalleEjercicio;
     // TODO Declarar un objeto llamado fab, que corresponda con un botón flotante
 	private FloatingActionButton fab;
 	private FloatingActionButton fab_detalle;
@@ -157,7 +158,12 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 			fab.setVisibility(View.GONE);
             // realiza la transacción
             getSupportFragmentManager().executePendingTransactions();
-        }
+        }else if(fragmentoDetalleEjercicio != null){
+			FragmentTransaction transaccion = getSupportFragmentManager().beginTransaction();
+			transaccion.replace(R.id.contenedor_detalle, fragmentoDetalle);
+			transaccion.addToBackStack(null);
+			transaccion.commit();
+		}
         // TODO Solicitar al presentador que trate el item seleccionado.
 		fab_detalle.setVisibility(View.VISIBLE);
 		presentadorPrincipal.obtenerEjercicios(posicion);
@@ -166,10 +172,30 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 	@Override
 	public void alSeleccionarItemDetalle(int posicion) {
 		// Si no hay fragmento detalle, se crea la vista detalle (esto ocurre si es panel único)
-		if (fragmentoDetalle == null)
-			fragmentoDetalle = new FragmentoDetalle();
+		if (fragmentoDetalleEjercicio == null)
+			fragmentoDetalleEjercicio = new FragmentoDetalleEjercicio();
 		// TODO Solicitar al presentador que trate el item seleccionado.
 		//presentadorPrincipal.obtenerDetallesEjercicio(posicionRutina);
+		if (findViewById(R.id.contenedorDeFragmentos) != null) {
+			// si es de panel único, se reemplaza, en el contenedor de fragmentos
+			// el fragmento que está visible por el de la vista detalle
+			FragmentTransaction transaccion = getSupportFragmentManager().beginTransaction();
+			transaccion.replace(R.id.contenedorDeFragmentos, fragmentoDetalleEjercicio);
+			transaccion.addToBackStack(null);
+			transaccion.commit();
+			// TODO Quitar la visibilidad al botón flotante (para que no aparezca en el detalle)
+
+		}else{
+			FragmentTransaction transaccion = getSupportFragmentManager().beginTransaction();
+			transaccion.replace(R.id.contenedor_detalle, fragmentoDetalleEjercicio);
+			transaccion.addToBackStack(null);
+			transaccion.commit();
+			//presentadorPrincipal.obtenerDetallesEjercicio(posicion);
+			// TODO Quitar la visibilidad al botón flotante (para que no aparezca en el detalle)
+		}
+		fab_detalle.setVisibility(View.GONE);
+		// realiza la transacción
+		getSupportFragmentManager().executePendingTransactions();
 	}
 
 
@@ -183,7 +209,14 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		if (findViewById(R.id.contenedorDeFragmentos) != null){
 			//Es panel único
-			if(fab.getVisibility() != View.VISIBLE){
+			if(fab.getVisibility() != View.VISIBLE && fab_detalle.getVisibility() != View.VISIBLE){
+				FragmentTransaction transaccion = getSupportFragmentManager().beginTransaction();
+				transaccion.replace(R.id.contenedorDeFragmentos, fragmentoDetalle);
+				transaccion.addToBackStack(null);
+				transaccion.commit();
+				fab_detalle.setVisibility(View.VISIBLE);
+				presentadorPrincipal.obtenerEjercicios(posicionRutina);
+			}else if(fab.getVisibility() != View.VISIBLE){
 				//Está en la vista del detalle
 				FragmentTransaction transaccion = getSupportFragmentManager().beginTransaction();
 				transaccion.replace(R.id.contenedorDeFragmentos, fragmentoMaestro);
@@ -192,13 +225,23 @@ public class VistaPrincipal extends AppCompatActivity implements IVistaPrincipal
 				fab.setVisibility(View.VISIBLE);
 				fab_detalle.setVisibility(View.GONE);
 				presentadorPrincipal.obtenerRutinas();
-			} else{
+			}
+			else{
 				//No está en la vista del detalle
 				finish();
 			}
 		} else {
 			//No es panel único
-			finish();
+			if(fab_detalle.getVisibility() != View.VISIBLE){
+				FragmentTransaction transaccion = getSupportFragmentManager().beginTransaction();
+				transaccion.replace(R.id.contenedor_detalle, fragmentoDetalle);
+				transaccion.addToBackStack(null);
+				transaccion.commit();
+				fab_detalle.setVisibility(View.VISIBLE);
+				presentadorPrincipal.obtenerEjercicios(posicionRutina);
+			}else {
+				finish();
+			}
 		}
 
 		/*if (drawer.isDrawerOpen(GravityCompat.START)) {
